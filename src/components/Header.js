@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 const Title = () => {
   return (
-    <a className="navbar-brand" href="index.html">
+    <a className="navbar-brand" href="/">
       <img
         className="logo"
         src="https://www.freepnglogos.com/uploads/hotel-logo-png/hotel-marriott-logo-png-15.png"
@@ -15,27 +17,27 @@ const Menu = () => {
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav mx-auto">
         <li className="nav-item">
-          <a className="nav-link active" href="index.html">
+          <Link className="nav-link active" to="/">
             Home
-          </a>
+          </Link>
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" href="about.html">
+          <Link className="nav-link" to="/About">
             About
-          </a>
+          </Link>
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" href="news.html">
-            Our Updates
-          </a>
+          <Link className="nav-link" to="/Updates">
+            Updates
+          </Link>
         </li>
 
         <li className="nav-item">
-          <a className="nav-link" href="contact.html">
+          <Link className="nav-link" to="/Contact">
             Contact
-          </a>
+          </Link>
         </li>
       </ul>
     </div>

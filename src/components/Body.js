@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Shimmer from "./shimmer";
 import RestrauntCard from "./RestrauntCard";
+import { Link } from "react-router-dom";
 
 function filterData(searchText, restarunts) {
-  return restarunts.filter((restarunt) => restarunt.data.name.toLowerCase().includes(searchText.toLocaleLowerCase()));
- }
+  return restarunts.filter((restarunt) =>
+    restarunt.data.name.toLowerCase().includes(searchText.toLocaleLowerCase())
+  );
+}
 
 const Body = () => {
   const [searchText, setSearchText] = useState(""); // Hooks : Just a normal function to create state variable
@@ -16,14 +19,17 @@ const Body = () => {
   // id dont want to dependent on anything set []
 
   async function getRestraunts() {
-    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5142377&lng=73.9256948&page_type=DESKTOP_WEB_LISTING");
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5142377&lng=73.9256948&page_type=DESKTOP_WEB_LISTING"
+    );
     const json = await data.json();
     // console.log(json);
-    setRestarunt(json?.data?.cards[2]?.data?.data?.cards); // optinal chaining 
+    setRestarunt(json?.data?.cards[2]?.data?.data?.cards); // optinal chaining
   }
 
-  return (restarunts.length === 0) ? <Shimmer/> : (
-
+  return restarunts.length === 0 ? (
+    <Shimmer />
+  ) : (
     <div className="container">
       <div className="row">
         <div className="searc-container row pb-2 pt-2">
@@ -51,7 +57,13 @@ const Body = () => {
           </div>
         </div>
         {restarunts.map((restarunt) => {
-          return <RestrauntCard {...restarunt.data} key={restarunt.data.id} />;
+          return (
+            <>
+              <Link to={"/Restraurant/" + restarunt.data.id}>
+                <RestrauntCard {...restarunt.data} key={restarunt.data.id} />;
+              </Link>
+            </>
+          );
         })}
       </div>
     </div>
