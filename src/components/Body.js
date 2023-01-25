@@ -1,30 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Shimmer from "./shimmer";
+import Shimmer from "./Shimmer";
 import RestrauntCard from "./RestrauntCard";
 import { Link } from "react-router-dom";
-
-function filterData(searchText, restarunts) {
-  return restarunts.filter((restarunt) =>
-    restarunt.data.name.toLowerCase().includes(searchText.toLocaleLowerCase())
-  );
-}
+import { filterData } from "../utils/helper";
+import useGetRestarunt from "../utils/useGetRestarunt";
+import useOnline from "../utils/useOnline";
 
 const Body = () => {
   const [searchText, setSearchText] = useState(""); // Hooks : Just a normal function to create state variable
-  const [restarunts, setRestarunt] = useState([]);
-  useEffect(() => {
-    //Callback function
-    getRestraunts();
-  }, [searchText]); // [] known as dependecy function or dependncy array
-  // id dont want to dependent on anything set []
+  const restarunts = useGetRestarunt(searchText);
+  const isOnline = useOnline();
 
-  async function getRestraunts() {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.5142377&lng=73.9256948&page_type=DESKTOP_WEB_LISTING"
-    );
-    const json = await data.json();
-    // console.log(json);
-    setRestarunt(json?.data?.cards[2]?.data?.data?.cards); // optinal chaining
+  if(!isOnline) {
+    return <h1>Offline, please check your internet connection!</h1>
   }
 
   return restarunts.length === 0 ? (
@@ -58,11 +46,11 @@ const Body = () => {
         </div>
         {restarunts.map((restarunt) => {
           return (
-            <>
+            <div className="col-lg-4 col-md-6 col-12" key={restarunt.data.id}>
               <Link to={"/Restraurant/" + restarunt.data.id}>
-                <RestrauntCard {...restarunt.data} key={restarunt.data.id} />;
+                <RestrauntCard {...restarunt.data} />;
               </Link>
-            </>
+            </div>
           );
         })}
       </div>

@@ -3,7 +3,6 @@ import {IMG_CDN_URL}  from '../config';
 const RestrauntCard = (props) => {
     const {name, cuisines, cloudinaryImageId, totalRatings, avgRating} = props;
     return (
-        <div className="col-lg-4 col-md-6 col-12">
         <div className="menu-thumb">
           <div className="menu-image-wrap">
             <img
@@ -30,7 +29,6 @@ const RestrauntCard = (props) => {
               <p className="reviews-text mb-0 ms-4">{totalRatings} Reviews</p>
             </div>
           </div>
-        </div>
       </div>
     )
 }

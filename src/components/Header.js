@@ -29,8 +29,8 @@ const Menu = () => {
         </li>
 
         <li className="nav-item">
-          <Link className="nav-link" to="/Updates">
-            Updates
+          <Link className="nav-link" to="/InstaMart">
+            InstaMart
           </Link>
         </li>
 

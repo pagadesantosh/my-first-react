@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React, { Children, lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -6,9 +6,23 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import Error from "./components/Error";
 import Contact from "./components/Contact";
-import Update from "./components/Updates";
+import Profile from "./components/Profile";
 import RestraurantMenu from "./components/RestraurantMenu";
+import Shimmer from "./components/Shimmer";
+
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+
+
+//Chunking
+//Code splitting
+//Dynamic Bundling
+//Lazy Loading
+//On Demad Loading
+//Dynamic Import
+
+const InstaMart = lazy(() => import("./components/InstaMart"));
+
+// Upon on demad loading  -> upon render -> suspend loading
 
 const AppLayout = () => {
   return (
@@ -35,6 +49,12 @@ const appRouter = createBrowserRouter([
       {
         path: "/About",
         element: <About />,
+        children: [
+          {
+            path: "Profile",
+            element: <Profile />,
+          },
+        ],
       },
       {
         path: "/Contact",
@@ -44,11 +64,15 @@ const appRouter = createBrowserRouter([
         path: "/Restraurant/:id",
         element: <RestraurantMenu />,
       },
+      {
+        path: "/InstaMart",
+        element: (
+          <Suspense fallback={ <Shimmer/>}>
+             <InstaMart/>
+          </Suspense>
+        ),
+      },
     ],
-  },
-  {
-    path: "/Updates",
-    element: <Update />,
   },
 ]);
 
